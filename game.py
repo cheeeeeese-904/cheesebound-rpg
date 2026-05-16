@@ -3,8 +3,8 @@ import json
 import os
 from character import Player
 from world import World
-from combat import Combat
 from save import SaveSystem
+from combat import battle
 
 class Game:
     def __init__(self):
@@ -20,7 +20,6 @@ class Game:
                 if self.player:
                     self.game_loop()
                     return
-
         self.create_character()
         self.game_loop()
 
@@ -31,11 +30,9 @@ class Game:
         print("2. Mage (Powerful spells)")
         print("3. Psychic (Earthbound-style PSI powers)")
         print("4. Rogue (Sneaky & lucky)")
-
         choice = input("Enter number: ")
         classes = {"1": "Warrior", "2": "Mage", "3": "Psychic", "4": "Rogue"}
         player_class = classes.get(choice, "Psychic")
-
         self.player = Player(name, player_class)
         print(f"\n{name} the {player_class} has begun their journey!")
 
@@ -50,9 +47,8 @@ class Game:
             print("3. Inventory")
             print("4. Save Game")
             print("5. Quit")
-
             choice = input("Choice: ")
-
+            
             if choice == "1":
                 self.world.explore(self.player)
             elif choice == "2":
@@ -66,3 +62,5 @@ class Game:
                     self.save_system.save_game(self.player)
                 print("Thanks for playing Cheesebound!")
                 break
+            else:
+                print("Invalid choice!")
